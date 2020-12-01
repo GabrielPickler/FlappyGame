@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.mygdx.game.States.FlappyGame
-import com.mygdx.game.States.sprites.Birds
+import com.mygdx.game.States.sprites.Santa
 import com.mygdx.game.States.sprites.Tube
 import com.badlogic.gdx.utils.Array;
 
@@ -16,8 +16,8 @@ class PlayState(gsm: GameStateManager) : State(gsm) {
         val CONTA_TUBO = 4
     }
 
-    val bird = Birds(50F, 300F)
-    val bg = Texture("assets/bg.png")
+    val santa = Santa(50F, 300F)
+    val bg = Texture("files/bg.png")
     var tubos: Array<Tube>
 
     init {
@@ -31,21 +31,21 @@ class PlayState(gsm: GameStateManager) : State(gsm) {
 
     override fun handleInput() {
         if (Gdx.input.justTouched()) {
-            bird.jump()
+            santa.jump()
         }
     }
 
     override fun atualiza(dt: Float) {
         handleInput()
-        bird.update(dt)
-        cam.position.x = bird.posicao.x + 80
+        santa.update(dt)
+        cam.position.x = santa.posicao.x + 80
         for(i in 0 until tubos.size){
             val tubo: Tube = tubos.get(i)
             if (cam.position.x - (cam.viewportWidth / 2) > tubo.posicaoTuboTopo.x + tubo.tuboSuperior.width) {
                 tubo.reposiciona(tubo.posicaoTuboTopo.x + ((Tube.TUBE_WIDTH + ESPACO_TUBOS) * CONTA_TUBO))
             }
-            if (tubo.colide(bird.getPlayerArea())) {
-                gsm.set(PlayState(gsm))
+            if (tubo.colide(santa.getPlayerArea())) {
+                gsm.set(MenuState(gsm))
             }
         }
         cam.update()
@@ -55,7 +55,7 @@ class PlayState(gsm: GameStateManager) : State(gsm) {
         sb.projectionMatrix = cam.combined
         sb.begin()
         sb.draw(bg, cam.position.x - (cam.viewportWidth / 2), 0F)
-        sb.draw(bird.texture, bird.posicao.x, bird.posicao.y)
+        sb.draw(santa.texture, santa.posicao.x, santa.posicao.y)
         for (tubo: Tube in tubos) {
             sb.draw(tubo.tuboSuperior, tubo.posicaoTuboTopo.x, tubo.posicaoTuboTopo.y)
             sb.draw(tubo.tuboInferior, tubo.posicaoTuboEmbaixo.x, tubo.posicaoTuboEmbaixo.y)
@@ -65,7 +65,7 @@ class PlayState(gsm: GameStateManager) : State(gsm) {
 
     override fun dispose() {
         bg.dispose()
-        bird.dispose()
+        santa.dispose()
         for (tubo: Tube in tubos) {
             tubo.dispose()
         }

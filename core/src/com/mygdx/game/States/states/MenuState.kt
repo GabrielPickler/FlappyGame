@@ -7,8 +7,12 @@ import com.mygdx.game.States.FlappyGame
 
 class MenuState(gsm : GameStateManager) : State(gsm) {
 
-    val background: Texture = Texture("assets/bg.png")
-    val playButton: Texture = Texture("assets/playbtn.png")
+    val background: Texture = Texture("files/bg.png")
+    val playButton: Texture = Texture("files/playbtn.png")
+
+    init {
+        cam.setToOrtho(false, FlappyGame().WIDTH / 2, FlappyGame().HEIGHT / 2)
+    }
 
     override fun handleInput() {
         if(Gdx.input.justTouched()){
@@ -22,8 +26,9 @@ class MenuState(gsm : GameStateManager) : State(gsm) {
 
     override fun render(sb: SpriteBatch) {
         sb.begin()
-        sb.draw(background, 0F, 0F, FlappyGame().WIDTH, FlappyGame().HEIGHT)
-        sb.draw(playButton, (FlappyGame().WIDTH / 2) - (playButton.width / 2), (FlappyGame().HEIGHT / 2))
+        sb.projectionMatrix = cam.combined
+        sb.draw(background, 0F, 0F)
+        sb.draw(playButton,  cam.position.x - playButton.width / 2, cam.position.y)
         sb.end()
     }
 

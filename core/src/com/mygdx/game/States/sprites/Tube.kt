@@ -14,8 +14,8 @@ class Tube(x: Float) {
         private val MENOR_ABERTURA = 120
     }
 
-    val tuboSuperior: Texture = Texture("assets/toptube.png")
-    val tuboInferior: Texture = Texture("assets/bottomtube.png")
+    val tuboSuperior: Texture = Texture("files/toptube.png")
+    val tuboInferior: Texture = Texture("files/bottomtube.png")
     val rand = Random()
     val posicaoTuboTopo = Vector2(x, (rand.nextInt(FLUTUACAO) + TUBO_GAP + MENOR_ABERTURA).toFloat())
     val posicaoTuboEmbaixo = Vector2(x, posicaoTuboTopo.y - TUBO_GAP - tuboInferior.height)
