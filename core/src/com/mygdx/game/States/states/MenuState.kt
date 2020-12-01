@@ -13,7 +13,6 @@ class MenuState(gsm : GameStateManager) : State(gsm) {
     override fun handleInput() {
         if(Gdx.input.justTouched()){
             gsm.set(PlayState(gsm))
-            dispose()
         }
     }
 

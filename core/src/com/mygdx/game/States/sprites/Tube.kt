@@ -32,4 +32,9 @@ class Tube(x: Float) {
     fun colide(player: Rectangle): Boolean {
         return player.overlaps(areaTopo) || player.overlaps(areaInferior)
     }
+
+    fun dispose(){
+        tuboSuperior.dispose()
+        tuboInferior.dispose()
+    }
 }

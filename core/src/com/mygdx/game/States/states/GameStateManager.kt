@@ -10,11 +10,11 @@ class GameStateManager(var states: Stack<State>) {
     }
 
     fun pop(){
-        states.pop()
+        states.pop().dispose()
     }
 
     fun set(state: State){
-        states.pop()
+        states.pop().dispose()
         states.push(state)
     }
 

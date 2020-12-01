@@ -11,26 +11,26 @@ import com.badlogic.gdx.utils.Array;
 
 class PlayState(gsm: GameStateManager) : State(gsm) {
 
-    companion object{
+    companion object {
         val ESPACO_TUBOS = 125
         val CONTA_TUBO = 4
     }
 
     val bird = Birds(50F, 300F)
     val bg = Texture("assets/bg.png")
-    var tubos : Array<Tube>
+    var tubos: Array<Tube>
 
     init {
         cam.setToOrtho(false, FlappyGame().WIDTH / 2, FlappyGame().HEIGHT / 2)
         tubos = Array()
-        for(i in CONTA_TUBO downTo 1 step 1){
+        for (i in CONTA_TUBO downTo 1 step 1) {
             tubos.add(Tube(i * (ESPACO_TUBOS + Tube.TUBE_WIDTH).toFloat()))
         }
 
     }
 
     override fun handleInput() {
-        if(Gdx.input.justTouched()){
+        if (Gdx.input.justTouched()) {
             bird.jump()
         }
     }
@@ -39,17 +39,15 @@ class PlayState(gsm: GameStateManager) : State(gsm) {
         handleInput()
         bird.update(dt)
         cam.position.x = bird.posicao.x + 80
-        for(tubo : Tube in tubos){
-            if(cam.position.x - (cam.viewportWidth / 2) > tubo.posicaoTuboTopo.x + tubo.tuboSuperior.width){
+        for(i in 0 until tubos.size){
+            val tubo: Tube = tubos.get(i)
+            if (cam.position.x - (cam.viewportWidth / 2) > tubo.posicaoTuboTopo.x + tubo.tuboSuperior.width) {
                 tubo.reposiciona(tubo.posicaoTuboTopo.x + ((Tube.TUBE_WIDTH + ESPACO_TUBOS) * CONTA_TUBO))
             }
-            if(tubo.colide(bird.getPlayerArea())){
+            if (tubo.colide(bird.getPlayerArea())) {
                 gsm.set(PlayState(gsm))
             }
         }
-
-
-
         cam.update()
     }
 
@@ -58,7 +56,7 @@ class PlayState(gsm: GameStateManager) : State(gsm) {
         sb.begin()
         sb.draw(bg, cam.position.x - (cam.viewportWidth / 2), 0F)
         sb.draw(bird.texture, bird.posicao.x, bird.posicao.y)
-        for(tubo : Tube in tubos) {
+        for (tubo: Tube in tubos) {
             sb.draw(tubo.tuboSuperior, tubo.posicaoTuboTopo.x, tubo.posicaoTuboTopo.y)
             sb.draw(tubo.tuboInferior, tubo.posicaoTuboEmbaixo.x, tubo.posicaoTuboEmbaixo.y)
         }
@@ -66,6 +64,10 @@ class PlayState(gsm: GameStateManager) : State(gsm) {
     }
 
     override fun dispose() {
-        TODO("Not yet implemented")
+        bg.dispose()
+        bird.dispose()
+        for (tubo: Tube in tubos) {
+            tubo.dispose()
+        }
     }
 }
