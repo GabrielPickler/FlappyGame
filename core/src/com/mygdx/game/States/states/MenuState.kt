@@ -17,7 +17,7 @@ class MenuState(gsm : GameStateManager) : State(gsm) {
         }
     }
 
-    override fun update(dt: Float) {
+    override fun atualiza(dt: Float) {
         handleInput()
     }
 

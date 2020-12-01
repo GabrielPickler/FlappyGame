@@ -12,7 +12,7 @@ abstract class State(
     protected var mouse: Vector3 = Vector3()
 
     protected abstract fun handleInput()
-    abstract fun update(dt: Float)
+    abstract fun atualiza(dt: Float)
     abstract fun render(sb: SpriteBatch)
     abstract fun dispose()
 

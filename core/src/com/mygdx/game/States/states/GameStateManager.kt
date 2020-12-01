@@ -19,7 +19,7 @@ class GameStateManager(var states: Stack<State>) {
     }
 
     fun update(dt: Float){
-        states.peek().update(dt)
+        states.peek().atualiza(dt)
     }
 
     fun render(sb: SpriteBatch){

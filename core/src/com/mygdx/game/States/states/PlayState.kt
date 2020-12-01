@@ -16,7 +16,7 @@ class PlayState(gsm: GameStateManager) : State(gsm) {
         val CONTA_TUBO = 4
     }
 
-    val bird = Birds(50, 300)
+    val bird = Birds(50F, 300F)
     val bg = Texture("assets/bg.png")
     var tubos : Array<Tube>
 
@@ -35,15 +35,20 @@ class PlayState(gsm: GameStateManager) : State(gsm) {
         }
     }
 
-    override fun update(dt: Float) {
+    override fun atualiza(dt: Float) {
         handleInput()
         bird.update(dt)
         cam.position.x = bird.posicao.x + 80
         for(tubo : Tube in tubos){
-            if(cam.position.x - (cam.viewportWidth / 2) > tubo.posicaoTuboTopo.x + tubo.topTube.width){
+            if(cam.position.x - (cam.viewportWidth / 2) > tubo.posicaoTuboTopo.x + tubo.tuboSuperior.width){
                 tubo.reposiciona(tubo.posicaoTuboTopo.x + ((Tube.TUBE_WIDTH + ESPACO_TUBOS) * CONTA_TUBO))
             }
+            if(tubo.colide(bird.getPlayerArea())){
+                gsm.set(PlayState(gsm))
+            }
         }
+
+
 
         cam.update()
     }
@@ -54,8 +59,8 @@ class PlayState(gsm: GameStateManager) : State(gsm) {
         sb.draw(bg, cam.position.x - (cam.viewportWidth / 2), 0F)
         sb.draw(bird.texture, bird.posicao.x, bird.posicao.y)
         for(tubo : Tube in tubos) {
-            sb.draw(tubo.topTube, tubo.posicaoTuboTopo.x, tubo.posicaoTuboTopo.y)
-            sb.draw(tubo.bottomTube, tubo.posicaoTuboEmbaixo.x, tubo.posicaoTuboEmbaixo.y)
+            sb.draw(tubo.tuboSuperior, tubo.posicaoTuboTopo.x, tubo.posicaoTuboTopo.y)
+            sb.draw(tubo.tuboInferior, tubo.posicaoTuboEmbaixo.x, tubo.posicaoTuboEmbaixo.y)
         }
         sb.end()
     }

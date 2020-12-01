@@ -1,6 +1,7 @@
 package com.mygdx.game.States.sprites
 
 import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
 import java.util.Random
 
@@ -13,14 +14,22 @@ class Tube(x: Float) {
         private val MENOR_ABERTURA = 120
     }
 
-    val topTube: Texture = Texture("assets/toptube.png")
-    val bottomTube: Texture = Texture("assets/bottomtube.png")
+    val tuboSuperior: Texture = Texture("assets/toptube.png")
+    val tuboInferior: Texture = Texture("assets/bottomtube.png")
     val rand = Random()
     val posicaoTuboTopo = Vector2(x, (rand.nextInt(FLUTUACAO) + TUBO_GAP + MENOR_ABERTURA).toFloat())
-    val posicaoTuboEmbaixo = Vector2(x, posicaoTuboTopo.y - TUBO_GAP - bottomTube.height)
+    val posicaoTuboEmbaixo = Vector2(x, posicaoTuboTopo.y - TUBO_GAP - tuboInferior.height)
+    val areaTopo: Rectangle = Rectangle(posicaoTuboTopo.x, posicaoTuboTopo.y, tuboSuperior.width.toFloat(), tuboSuperior.height.toFloat())
+    val areaInferior: Rectangle = Rectangle(posicaoTuboEmbaixo.x, posicaoTuboEmbaixo.y, tuboInferior.width.toFloat(), tuboInferior.height.toFloat())
 
-    fun reposiciona(x: Float){
+    fun reposiciona(x: Float) {
         posicaoTuboTopo.set(x, (rand.nextInt(FLUTUACAO) + TUBO_GAP + MENOR_ABERTURA).toFloat())
-        posicaoTuboEmbaixo.set(x, posicaoTuboTopo.y - TUBO_GAP - bottomTube.height)
+        posicaoTuboEmbaixo.set(x, posicaoTuboTopo.y - TUBO_GAP - tuboInferior.height)
+        areaTopo.setPosition(posicaoTuboTopo.x, posicaoTuboTopo.y)
+        areaInferior.setPosition(posicaoTuboEmbaixo.x, posicaoTuboEmbaixo.y)
+    }
+
+    fun colide(player: Rectangle): Boolean {
+        return player.overlaps(areaTopo) || player.overlaps(areaInferior)
     }
 }
