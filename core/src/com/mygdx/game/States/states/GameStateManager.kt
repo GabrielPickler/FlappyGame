@@ -1,11 +1,9 @@
-package com.mygdx.game.States.States
+package com.mygdx.game.States.states
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import java.util.Stack
 
-class GameStateManager() {
-
-    lateinit var states: Stack<State>
+class GameStateManager(var states: Stack<State>) {
 
     fun push(state: State){
         states.push(state)
