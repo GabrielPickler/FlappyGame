@@ -23,7 +23,6 @@ class FlappyGame : ApplicationAdapter() {
     override fun create() {
         batch = SpriteBatch()
         gsm = GameStateManager(Stack())
-        img = Texture("badlogic.jpg")
         gsm.push(MenuState(gsm))
     }
 

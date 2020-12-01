@@ -12,7 +12,7 @@ class Birds(x: Float, y: Float) {
 
     val posicao: Vector3 = Vector3(x.toFloat(), y.toFloat(), 0F)
     val velocidade: Vector3 = Vector3(0F, 0F, 0F)
-    val texture: Texture = Texture("assets/bird.png")
+    val texture: Texture = Texture("assets/santaclaus.png")
     val area : Rectangle = Rectangle(x, y, texture.width.toFloat(), texture.height.toFloat())
 
     fun update(dt: Float) {
